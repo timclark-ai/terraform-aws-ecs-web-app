@@ -1,5 +1,6 @@
 provider "aws" {
   region = var.region
+  profile = "nikosce"
 }
 
 module "vpc" {
@@ -11,7 +12,7 @@ module "vpc" {
 
 module "subnets" {
   source               = "cloudposse/dynamic-subnets/aws"
-  version              = "2.3.0"
+  version              = "2.4.1"
   availability_zones   = var.availability_zones
   vpc_id               = module.vpc.vpc_id
   igw_id               = [module.vpc.igw_id]
@@ -23,7 +24,7 @@ module "subnets" {
 
 module "alb" {
   source                                  = "cloudposse/alb/aws"
-  version                                 = "0.27.0"
+  version                                 = "1.10.0"
   vpc_id                                  = module.vpc.vpc_id
   security_group_ids                      = [module.vpc.vpc_default_security_group_id]
   subnet_ids                              = module.subnets.public_subnet_ids
@@ -90,6 +91,7 @@ module "ecs_web_app" {
 
   # ECS
   ecs_private_subnet_ids            = module.subnets.private_subnet_ids
+  ecs_public_subnet_ids             = module.subnets.public_subnet_ids
   ecs_cluster_arn                   = aws_ecs_cluster.default.arn
   ecs_cluster_name                  = aws_ecs_cluster.default.name
   ecs_security_group_ids            = var.ecs_security_group_ids

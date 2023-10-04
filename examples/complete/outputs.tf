@@ -95,12 +95,12 @@ output "alb_ingress_target_group_arn_suffix" {
 
 output "container_definition_json" {
   description = "JSON encoded list of container definitions for use with other terraform resources such as aws_ecs_task_definition"
-  value       = module.ecs_web_app.container_definition_json
+  value       = nonsensitive(module.ecs_web_app.container_definition_json)
 }
 
 output "container_definition_json_map" {
   description = "JSON encoded container definitions for use with other terraform resources such as aws_ecs_task_definition"
-  value       = module.ecs_web_app.container_definition_json_map
+  value       = nonsensitive(module.ecs_web_app.container_definition_json_map)
 }
 
 output "ecs_exec_role_policy_id" {
@@ -115,17 +115,17 @@ output "ecs_exec_role_policy_name" {
 
 output "ecs_service_name" {
   description = "ECS Service name"
-  value       = module.ecs_web_app.ecs_service_name
+  value       = nonsensitive(module.ecs_web_app.ecs_service_name)
 }
 
 output "ecs_service_role_arn" {
   description = "ECS Service role ARN"
-  value       = module.ecs_web_app.ecs_service_role_arn
+  value       = nonsensitive(module.ecs_web_app.ecs_service_role_arn)
 }
 
 output "ecs_task_exec_role_name" {
   description = "ECS Task role name"
-  value       = module.ecs_web_app.ecs_task_exec_role_name
+  value       = nonsensitive(module.ecs_web_app.ecs_task_exec_role_name)
 }
 
 output "ecs_task_exec_role_arn" {

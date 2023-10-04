@@ -395,7 +395,7 @@ variable "alb_security_group" {
 variable "use_alb_security_group" {
   type        = bool
   description = "A boolean to enable adding an ALB security group rule for the service task"
-  default     = false
+  default     = true
 }
 
 variable "use_nlb_cidr_blocks" {
@@ -568,7 +568,7 @@ variable "log_driver" {
 variable "assign_public_ip" {
   type        = bool
   description = "Assign a public IP address to the ENI (Fargate launch type only). Valid values are `true` or `false`. Default `false`"
-  default     = false
+  default     = true
 }
 
 variable "ecs_alarms_enabled" {
@@ -723,6 +723,11 @@ variable "ecs_security_group_enabled" {
 variable "ecs_private_subnet_ids" {
   type        = list(string)
   description = "List of Private Subnet IDs to provision ECS Service onto if `var.network_mode = \"awsvpc\"`"
+}
+
+variable "ecs_public_subnet_ids" {
+  type        = list(string)
+  description = "List of Public Subnet IDs to provision ECS Service onto if `var.network_mode = \"awsvpc\"`"
 }
 
 variable "github_oauth_token" {

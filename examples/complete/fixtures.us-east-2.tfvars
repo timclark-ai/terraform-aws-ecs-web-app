@@ -2,7 +2,7 @@ region = "us-east-2"
 
 availability_zones = ["us-east-2a", "us-east-2b"]
 
-namespace = "eg"
+namespace = "nikos"
 
 stage = "test"
 
@@ -10,7 +10,7 @@ name = "ecs-web-app"
 
 vpc_cidr_block = "172.16.0.0/16"
 
-container_image = "cloudposse/default-backend"
+container_image = "nginx"
 
 container_cpu = 256
 
@@ -55,6 +55,8 @@ alb_ingress_unauthenticated_paths = ["/"]
 aws_logs_region = "us-east-2"
 
 log_driver = "awslogs"
+
+assign_public_ip = true
 
 ecs_alarms_enabled = true
 
@@ -110,7 +112,7 @@ webhook_filter_match_equals = "refs/heads/{Branch}"
 
 authentication_type = ""
 
-codepipeline_enabled = true
+codepipeline_enabled = false
 
 codepipeline_s3_bucket_force_destroy = true
 

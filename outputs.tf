@@ -89,16 +89,19 @@ output "ecs_service_arn" {
 output "ecs_service_name" {
   description = "ECS Service name"
   value       = module.ecs_alb_service_task.service_name
+  sensitive = true
 }
 
 output "ecs_service_role_arn" {
   description = "ECS Service role ARN"
   value       = module.ecs_alb_service_task.service_role_arn
+  sensitive = true
 }
 
 output "ecs_task_exec_role_name" {
   description = "ECS Task role name"
   value       = module.ecs_alb_service_task.task_exec_role_name
+  sensitive = true
 }
 
 output "ecs_task_exec_role_arn" {
@@ -119,6 +122,7 @@ output "ecs_task_role_arn" {
 output "ecs_task_role_id" {
   description = "ECS Task role id"
   value       = module.ecs_alb_service_task.task_role_id
+  sensitive = false
 }
 
 output "ecs_service_security_group_id" {

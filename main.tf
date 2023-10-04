@@ -2,7 +2,7 @@ data "aws_region" "current" {}
 
 module "ecr" {
   source  = "cloudposse/ecr/aws"
-  version = "0.34.0"
+  version = "0.38.0"
   enabled = module.this.enabled && (var.ecr_enabled || var.codepipeline_enabled)
 
   attributes           = ["ecr"]
@@ -22,7 +22,7 @@ resource "aws_cloudwatch_log_group" "app" {
 
 module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
-  version = "0.25.1"
+  version = "0.28.0"
 
   vpc_id = var.vpc_id
   port   = var.container_port
@@ -73,7 +73,7 @@ module "alb_ingress" {
 
 module "container_definition" {
   source                       = "cloudposse/ecs-container-definition/aws"
-  version                      = "0.58.1"
+  version                      = "0.61.0"
   container_name               = module.this.id
   container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
@@ -140,7 +140,7 @@ locals {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.64.1"
+  version = "0.71.0"
 
   alb_security_group                 = var.alb_security_group
   use_alb_security_group             = var.use_alb_security_group
@@ -164,7 +164,8 @@ module "ecs_alb_service_task" {
   assign_public_ip                   = var.assign_public_ip
   security_group_enabled             = var.ecs_security_group_enabled
   security_group_ids                 = var.ecs_security_group_ids
-  subnet_ids                         = var.ecs_private_subnet_ids
+  #subnet_ids                         = var.ecs_private_subnet_ids
+  subnet_ids                         = var.ecs_public_subnet_ids
   container_port                     = var.container_port
   nlb_container_port                 = var.nlb_container_port
   docker_volumes                     = var.volumes
@@ -189,11 +190,11 @@ module "ecs_alb_service_task" {
 module "ecs_codepipeline" {
   enabled = var.codepipeline_enabled
   source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.30.0"
+  version = "0.33.0"
 
   region                      = coalesce(var.region, data.aws_region.current.name)
   github_oauth_token          = var.github_oauth_token
-  github_webhooks_token       = var.github_webhooks_token
+  #github_webhooks_token       = var.github_webhooks_token
   github_webhook_events       = var.github_webhook_events
   repo_owner                  = var.repo_owner
   repo_name                   = var.repo_name
@@ -265,7 +266,7 @@ locals {
 
 module "ecs_cloudwatch_sns_alarms" {
   source  = "cloudposse/ecs-cloudwatch-sns-alarms/aws"
-  version = "0.12.2"
+  version = "0.12.3"
   enabled = var.ecs_alarms_enabled
 
   cluster_name = var.ecs_cluster_name
